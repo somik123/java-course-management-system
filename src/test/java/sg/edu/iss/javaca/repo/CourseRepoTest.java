@@ -1,10 +1,7 @@
 package sg.edu.iss.javaca.repo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -20,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sg.edu.iss.javaca.JavaCaApplication;
 import sg.edu.iss.javaca.domain.Course;
 import sg.edu.iss.javaca.domain.Enrollment;
-import sg.edu.iss.javaca.domain.Role;
 import sg.edu.iss.javaca.domain.User;
 import sg.edu.iss.javaca.service.CourseService;
 import sg.edu.iss.javaca.service.EnrollmentService;

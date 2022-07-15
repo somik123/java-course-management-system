@@ -1,9 +1,8 @@
 package sg.edu.iss.javaca.repo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -16,14 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import sg.edu.iss.javaca.JavaCaApplication;
-import sg.edu.iss.javaca.domain.Course;
-import sg.edu.iss.javaca.domain.Enrollment;
-import sg.edu.iss.javaca.domain.Role;
 import sg.edu.iss.javaca.domain.User;
-import sg.edu.iss.javaca.repo.CourseRepo;
-import sg.edu.iss.javaca.repo.EnrollmentRepo;
-import sg.edu.iss.javaca.repo.RoleRepo;
-import sg.edu.iss.javaca.repo.UserRepo;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JavaCaApplication.class)

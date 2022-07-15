@@ -14,17 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import sg.edu.iss.javaca.JavaCaApplication;
 import sg.edu.iss.javaca.domain.Course;
 import sg.edu.iss.javaca.domain.Enrollment;
 import sg.edu.iss.javaca.domain.Role;
 import sg.edu.iss.javaca.domain.User;
-import sg.edu.iss.javaca.repo.CourseRepo;
-import sg.edu.iss.javaca.repo.EnrollmentRepo;
-import sg.edu.iss.javaca.repo.RoleRepo;
-import sg.edu.iss.javaca.repo.UserRepo;
 import sg.edu.iss.javaca.service.CourseService;
 import sg.edu.iss.javaca.service.EnrollmentService;
 import sg.edu.iss.javaca.service.RoleService;
