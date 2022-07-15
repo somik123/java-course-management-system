@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.manageCourse.title}"></h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+
+						<div class="card">
+							<div class="card-body">
+								<div><a th:href="@{/admin/createcourse}" class="btn btn-primary"
+										th:utext="#{admin.manageCourse.create}"></a></div>
+								<br /><br />
+								<div class="table-responsive">
+									<table id="coursesTable" class="table-hover display expandable-table"
+										style="width:100%">
+										<thead>
+											<tr>
+												<th th:utext="#{admin.manageCourse.course.Id}"></th>
+												<th th:utext="#{admin.manageCourse.course.Name}"></th>
+												<th th:utext="#{admin.manageCourse.course.Size}"></th>
+												<th th:utext="#{admin.manageCourse.course.Credits}"></th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${courseList.empty}">
+												<td colspan="2" th:utext="#{admin.manageCourse.courseEmpty}"> </td>
+											</tr>
+											<tr th:each="course : ${courseList}">
+												<td><span th:text="${course.Id}"> Id </span></td>
+												<td><span th:text="${course.name}"> name </span></td>
+												<td><span th:text="${course.size}"> size </span></td>
+												<td><span th:text="${course.credits}"> credits </span></td>
+												<td><a th:href="@{/admin/editcourse/{id}(id=${course.Id})}"
+														class="btn btn-info">Edit</a></td>
+												<td><a th:href="@{/admin/deletecourse/{id}(id=${course.Id})}"
+														th:utext="#{admin.manageCourse.deleteCourse}"
+														class="btn btn-danger"></a></td>
+											</tr>
+										</tbody>
+									</table>
+									<th:block th:if="${pageNo} <= 0">
+										<th:block th:each="pageNo: 0">
+											<nav aria-label="Page navigation example">
+												<ul class="pagination">
+													<li class="page-item">
+														<a class="page-link" th:utext="#{page.navigation.previous}"
+															th:href="@{/admin/courses(pageNo=${pageNo})}"></a>
+													</li>
+													<li class="page-item">
+														<a class="page-link" th:utext="#{page.navigation.next}"
+															th:href="@{/admin/courses(pageNo=${pageNo}+1)}"></a>
+													</li>
+												</ul>
+											</nav>
+										</th:block>
+									</th:block>
+									<th:block th:unless="${pageNo} >= 0">
+										<th:block th:each="pageNo: ${pageNo}">
+											<nav aria-label="Page navigation example">
+												<ul class="pagination">
+													<li class="page-item">
+														<a class="page-link" th:utext="#{page.navigation.previous}"
+															th:href="@{/admin/courses(pageNo=${pageNo}-1)}"></a>
+													</li>
+													<li class="page-item">
+														<a class="page-link" th:utext="#{page.navigation.next}"
+															th:href="@{/admin/courses(pageNo=${pageNo}+1)}"></a>
+													</li>
+												</ul>
+											</nav>
+										</th:block>
+									</th:block>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+
+</body>
+
+</html>

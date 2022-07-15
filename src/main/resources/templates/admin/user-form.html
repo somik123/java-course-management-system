@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold">Manage Users</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+
+								<form action="#" th:action="@{/admin/saveuser}" th:object="${user}" method="POST">
+
+									<input type="hidden" th:if="${user.id != null}" th:field="*{id}"
+										placeholder="User ID">
+									<div class="form-group">
+										<label>User Name</label>
+										<input type="text" th:field="*{username}" placeholder="Username"
+											class="form-control mb-4 col-4">
+										<p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></p>
+									</div>
+									<div class="form-group" style="display: none;">
+										<label>Password</label>
+										<input type="text" th:field="*{password}" placeholder="Password"
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+									</div>
+									<div class="form-group">
+										<label>Email</label>
+										<input type="email" th:field="*{email}" placeholder="User Email"										
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+									</div>
+									<div class="form-group">
+										<label>Last Name</label>
+										<input type="text" th:field="*{lastName}" placeholder="User Last Name"						
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+									</div>
+									<div class="form-group">
+										<label>First Name</label>
+										<input type="text" th:field="*{firstMidName}"									
+											placeholder="User First & Middle Name" class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('firstMidName')}" th:errors="*{firstMidName}"></p>
+									</div>
+									<div class="form-group">
+										<label>Account Enabled?</label>
+										<select th:field="*{enabled}" class="form-control mb-4 col-4">
+											<option value="true">Account Enabled</option>
+											<option value="false">Account Disabled</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Roles</label>
+
+										<select th:object="${role}" th:field="${role.name}"
+											class="form-control mb-4 col-4">
+											<option th:each="r : ${roleList}" th:value="${r.name}" th:text="${r.name}">
+												GUEST</option>
+										</select>
+									</div>
+									<button type="submit" class="btn btn-info col-2">Save</button>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.courseEnrollment.title}"></h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<div  th:if="${size < 0}" th:utext="#{admin.courseEnrollment.emptylist}"></div>
+									<table class="display expandable-table" id="courseTaught" style="width:100%" th:if="${size >= 0}">
+										<thead>
+											<tr>
+												<th th:utext="#{admin.courseEnrollment.course.Id}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Name}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Credits}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Size}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Students}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Lecturers}"></th>
+												<th th:utext="#{admin.courseEnrollment.course.Enrolment}"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="i : ${#numbers.sequence(0, size)}">
+												<td th:text="${courses.get(i).Id}">1</td>
+												<td class="font-weight-bold" th:text="${courses.get(i).name}"></td>
+												<td th:text="${courses.get(i).credits}"></td>
+												<td th:text="${courses.get(i).size}"></td>
+												<td class="font-weight-medium">
+													<div class="badge badge-success" th:text="${activeStudents.get(i)}"></div>
+												</td>
+												<td class="font-weight-medium">
+													<div class="badge badge-primary" th:text="${activeLecturers.get(i)}"></div>
+												</td>
+												<td>
+													<a class="btn btn-info" th:utext="#{admin.courseEnrollment.manageEnrolment}"
+														th:href="@{/admin/manage-enrolment/{id}(id=${courses.get(i).Id})}"></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+	<script>
+		$(document).ready(function () {
+			$('#courseTaught').DataTable({
+				"paging": true,
+				"pageLength": 5,
+				"filter": true,
+				"ordering": false,
+				"lengthMenu": [
+					[5, 10, 25, 50, -1],
+					[5, 10, 25, 50, 'All'],
+				],
+			});
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.manageCourse.create}"></h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+
+								<form action="#" th:action="@{/admin/savecourse}" th:object="${course}" method="POST">
+
+									<input type="hidden" th:if="${course.id != null}" th:field="*{id}">
+
+									<div class="form-group">
+										<label th:utext="#{admin.manageCourse.course.Name}"></label>
+										<input type="text" th:field="*{name}" placeholder="Course Name"
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+									</div>
+									<div class="form-group">
+										<label th:utext="#{admin.manageCourse.course.Size}"></label>
+										<input type="text" th:field="*{size}" placeholder="Course size"
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></p>
+									</div>
+									<div class="form-group">
+										<label th:utext="#{admin.manageCourse.course.Credits}"></label>
+										<input type="text" th:field="*{credits}" placeholder="Course credits"
+											class="form-control mb-4 col-4">
+											<p class="text-danger" th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></p>
+									</div>
+									<button type="submit" class="btn btn-info col-2" th:utext="#{admin.manageCourse.saveCourse}"></button>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>

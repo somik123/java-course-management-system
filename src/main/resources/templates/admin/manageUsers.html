@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.manageUsers.title}"></h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<table style="width:100%">
+									<tr>
+										<td>
+											<a th:href="@{/admin/adduser}" class="btn btn-primary"
+												th:utext="#{admin.manageUsers.addbtn}"></a>
+										</td>
+										<td style="text-align: right;">
+											<form th:action="@{/admin/search}" method="GET">
+												<input type="text" name="searchTxt" placeholder="Search in all users"
+													class="form-control mb-4 col-4" style="display: inline;">
+												<button type="submit" class="btn btn-info" style="display: inline;">Search</button>
+											</form>
+										</td>
+									</tr>
+								</table>
+								
+								<br /><br />
+								
+								<div class="table-responsive">
+									<table class="table-hover display expandable-table" id="userTable"
+										style="width:100%">
+										<thead>
+											<tr>
+												<th></th>
+												<th th:utext="#{admin.manageUsers.user.Email}"></th>
+												<th th:utext="#{admin.manageUsers.user.Enabled}"></th>
+												<th th:utext="#{admin.manageUsers.user.LastName}"></th>
+												<th th:utext="#{admin.manageUsers.user.FirstMidName}"></th>
+												<th th:utext="#{admin.manageUsers.user.Username}"></th>
+												<th th:utext="#{admin.manageUsers.user.Role}"></th>
+												<th th:utext="#{admin.manageUsers.user.Edit}"></th>
+												<th th:utext="#{admin.manageUsers.user.Delete}"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="user : ${users}">
+												<td>
+													<div th:if="${user.profileImage != null}">
+														<image th:src="@{${user.profileImage}}" alt="Profile Image"
+															style="border-radius: 50%; object-fit: cover;" width="50px"
+															height="50px">
+													</div>
+													<div th:if="${user.profileImage == null}">
+														<image th:src="@{/images/unknown.png}" alt="Profile Image"
+															style="border-radius: 50%; object-fit: cover;" width="50px"
+															height="50px">
+													</div>
+												</td>
+												<td th:text="${user.email}">Email</th>
+												<td th:text="${user.enabled} ? 'Yes' : 'No'">Enabled</th>
+												<td th:text="${user.lastName}">LastName</th>
+												<td th:text="${user.firstMidName}">FirstMidName</th>
+												<td th:text="${user.username}">Username</th>
+												<td th:text="${user.UserRole.name}">Role</th>
+												<td>
+													<a class="btn btn-info" th:utext="#{admin.manageUsers.user.Edit}"
+														th:href="@{/admin/edituser/{id}(id=${user.Id})}"></a>
+												</td>
+												<td>
+													<a class="btn btn-danger ml-2"
+														th:utext="#{admin.manageUsers.user.Delete}"
+														th:href="@{/admin/deleteuser/{id}(id=${user.Id},role=${user.UserRole.name})}"></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+									<th:block th:if="${userType} == 'admin'">
+										<th:block th:if="${pageNo} <= 0">
+											<th:block th:each="pageNo: 0">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Admins(pageNo=${pageNo})}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Admins(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+										<th:block th:unless="${pageNo} >= 0">
+											<th:block th:each="pageNo: ${pageNo}">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Admins(pageNo=${pageNo}-1)}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Admins(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+									</th:block>
+
+
+
+									<th:block th:if="${userType} == 'lecturer'">
+										<th:block th:if="${pageNo} <= 0">
+											<th:block th:each="pageNo: 0">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Lecturers(pageNo=${pageNo})}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Lecturers(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+										<th:block th:unless="${pageNo} >= 0">
+											<th:block th:each="pageNo: ${pageNo}">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Lecturers(pageNo=${pageNo}-1)}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Lecturers(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+									</th:block>
+
+
+									<th:block th:if="${userType} == 'student'">
+										<th:block th:if="${pageNo} <= 0">
+											<th:block th:each="pageNo: 0">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Students(pageNo=${pageNo})}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Students(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+										<th:block th:unless="${pageNo} >= 0">
+											<th:block th:each="pageNo: ${pageNo}">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Students(pageNo=${pageNo}-1)}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Students(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+									</th:block>
+
+
+									<th:block th:if="${userType}== 'guest'">
+										<th:block th:if="${pageNo} <= 0">
+											<th:block th:each="pageNo: 0">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Guests(pageNo=${pageNo})}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Guests(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+										<th:block th:unless="${pageNo} >= 0">
+											<th:block th:each="pageNo: ${pageNo}">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.previous}"
+																th:href="@{/admin/users/Guests(pageNo=${pageNo}-1)}"></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" th:utext="#{page.navigation.next}"
+																th:href="@{/admin/users/Guests(pageNo=${pageNo}+1)}"></a>
+														</li>
+													</ul>
+												</nav>
+											</th:block>
+										</th:block>
+									</th:block>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+
+</body>
+
+</html>

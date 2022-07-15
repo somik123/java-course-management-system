@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.manageEnrollment.title}"></h3>
+								<h6 th:text="${course.name}" class="font-weight-normal mb-0"></h6>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<div>
+										<form action="#" th:action="@{/admin/manage-enrolment/{id}(id=${course.Id})}"
+											th:object="${newUser}" method="POST">
+											<table>
+												<tr>
+													<td>
+														<select th:field="*{id}" class="form-control"
+															style="width: 400px;">
+															<option th:each="user : ${allUsers}" th:value="${user.id}"
+																th:text="${ '['+user.UserRole.name+'] ' +user.lastName+' '+user.firstMidName}">
+															</option>
+														</select>
+													</td>
+													<td>
+														<button type="submit" class="btn btn-primary"
+															style="margin-left:10px"
+															th:utext="#{admin.manageEnrollment.addbtn}"></button>
+													</td>
+													<td>
+														<div th:if="${param.success}" class="text-success"
+															th:utext="#{admin.manageEnrollment.addSuccess}"
+															style=" margin-left:10px">
+														</div>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<br />
+									<br />
+
+									<table id="enrollmentTable" class="table-hover display expandable-table"
+										style="width:100%">
+										<thead>
+											<tr>
+												<th th:utext="#{admin.manageEnrollment.enroll.Id}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.Email}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.Enabled}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.LastName}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.FirstMidName}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.Username}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.Role}"></th>
+												<th th:utext="#{admin.manageEnrollment.enroll.Performance}"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="user : ${users}">
+												<td th:text="${user.Id}">ID</td>
+												<td th:text="${user.email}">Email</td>
+												<td th:text="${user.enabled} ? 'Yes' : 'No'">Enabled</td>
+												<td th:text="${user.lastName}">LastName</td>
+												<td th:text="${user.firstMidName}">FirstMidName</td>
+												<td th:text="${user.username}">Username</td>
+												<td th:text="${user.UserRole.name}">Role</td>
+												<td>
+													<a class="btn btn-danger"
+														th:utext="#{admin.manageEnrollment.deleteEnroll}"
+														th:href="@{/admin/manage-enrolment/{courseId}/{userId}(userId=${user.Id},courseId=${course.Id})}">
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+	<script>
+		$(document).ready(function () {
+			$('#enrollmentTable').DataTable({
+				"paging": true,
+				"pageLength": 5,
+				"filter": true,
+				"ordering": false,
+				"lengthMenu": [
+					[5, 10, 25, 50, -1],
+					[5, 10, 25, 50, 'All'],
+				],
+			});
+		});
+	</script>
+
+</body>
+
+</html>

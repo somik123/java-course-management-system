@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold" th:utext="#{admin.dashboard.title}"></h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="col-md-12 grid-margin transparent">
+
+							<div class="row">
+								<div class="col-md-4 mb-4 stretch-card transparent">
+									<div class="card card-tale">
+										<div class="card-body">
+											<p class="mb-4" th:utext="#{admin.dashboard.totalcourses}"></p>
+											<p class="fs-30 mb-2"><span th:text="${dashboard.courseCount}"></span></p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 mb-4 stretch-card transparent">
+									<div class="card card-dark-blue">
+										<div class="card-body">
+											<p class="mb-4" th:utext="#{admin.dashboard.totalstudents}"></p>
+											<p class="fs-30 mb-2"><span th:text="${dashboard.studentCount}"></span></p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 mb-4 stretch-card transparent">
+									<div class="card card-light-blue">
+										<div class="card-body">
+											<p class="mb-4" th:utext="#{admin.dashboard.totallect}"></p>
+											<p class="fs-30 mb-2"><span th:text="${dashboard.lecturerCount}"></span></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br><br>
+							<div class="row">
+								<div class="col-md-12 mb-4 stretch-card transparent">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-title" th:utext="#{admin.dashboard.seatsavail}"></div>
+											<table class="table table-borderless report-table">
+												<tr th:each="i : ${#numbers.sequence(0, size)}">
+													<td class="font-weight-bold mb-0"><span
+															th:text="${courses.get(i).name}"></span></td>
+													<td class="w-100 px-0">
+														<div class="progress progress-md mx-4">
+
+															<div th:if="${i%2==0}" class="progress-bar bg-info"
+																role="progressbar"
+																th:style="'width:' + ${seatAvailablesPercent.get(i)} + '%;'"
+																th:aria-valuenow="${seatAvailablesPercent.get(i)}"
+																aria-valuemin="0" aria-valuemax="100"></div>
+
+
+															<div th:if="${i%2!=0}" class="progress-bar bg-warning"
+																role="progressbar"
+																th:style="'width:' + ${seatAvailablesPercent.get(i)} + '%;'"
+																th:aria-valuenow="${seatAvailablesPercent.get(i)}"
+																aria-valuemin="0" aria-valuemax="100"></div>
+
+														</div>
+													</td>
+													<td>
+														<div class="text-muted">
+															<span th:text="${seatAvailables.get(i)}"></span> /
+															<span th:text="${courses.get(i).size}"></span>
+															<span th:utext="#{admin.dashboard.seatsavail2}"></span>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>

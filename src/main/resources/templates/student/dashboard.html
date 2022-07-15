@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="fragments/layout.html :: sidebar" />
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold">Student Dashboard</h3>
+								<h6 class="font-weight-normal mb-0">All systems are running smoothly!</h6>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="col-md-12 grid-margin transparent">
+
+							<div class="row">
+								<div class="col-md-4 mb-4 stretch-card transparent"
+									th:each="i : ${#numbers.sequence(0, size)}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="mb-4"><span th:text="${courses.get(i).name}"></span></h5>
+											<div class="progress progress-md">
+
+												<div th:if="${i%2==0}" class="progress-bar bg-info" role="progressbar"
+													th:style="'width:' + ${seatAvailablesPercent.get(i)} + '%;'"
+													th:aria-valuenow="${seatAvailablesPercent.get(i)}" aria-valuemin="0"
+													aria-valuemax="100"></div>
+
+
+												<div th:if="${i%2!=0}" class="progress-bar bg-warning"
+													role="progressbar"
+													th:style="'width:' + ${seatAvailablesPercent.get(i)} + '%;'"
+													th:aria-valuenow="${seatAvailablesPercent.get(i)}" aria-valuemin="0"
+													aria-valuemax="100"></div>
+
+											</div>	
+											<h6 style="margin-top:10px;"><span th:text="${seatAvailables.get(i)}"/> / <span th:text="${courses.get(i).size}"/> seats available.</h6>	
+											<form th:action="@{/student/enroll-course}" method="get">
+											<button type="submit" class="btn btn-block btn-outline-primary">View More</button>	
+											</form>						
+										</div>
+									</div>
+								</div>
+							</div>
+			
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>

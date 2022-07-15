@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+
+	<div class="container-scroller">
+		<div class="container-fluid page-body-wrapper full-page-wrapper">
+			<div class="content-wrapper d-flex align-items-center auth px-0">
+				<div class="row w-100 mx-0">
+					<div class="col-lg-4 mx-auto">
+						<div class="auth-form-light text-left py-5 px-4 px-sm-5">
+							<div class="brand-logo">
+								<img th:src="@{images/logo.svg}" alt="logo">
+							</div>
+							<h4>Upload Profile Image</h4>
+							<h6 class="font-weight-light">Please upload your profile image.</h6>
+							<form class="pt-3" th:action="@{'/upload_profile_image'}" method="post" enctype="multipart/form-data">
+
+								<label>Profile Image: </label>
+								<input type="file" name="image" accept="image/png, image/jpeg" required="true"/>
+								<div class="mt-3">
+									<button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+										type="submit">Upload</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- content-wrapper ends -->
+		</div>
+		<!-- page-body-wrapper ends -->
+	</div>
+	<!-- container-scroller -->
+
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>
